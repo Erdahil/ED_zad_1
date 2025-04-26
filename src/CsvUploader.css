@@ -1,0 +1,29 @@
+.csv-container {
+    padding: 1rem;
+    background-color: #f7fafc;
+    min-height: 100vh;
+  }
+  
+  .file-input {
+    margin-bottom: 1rem;
+  }
+  
+  .csv-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid black;
+  }
+  
+  .csv-table th,
+  .csv-table td {
+    border: 2px solid black;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    background-color: #edf2f7;
+  }
+  
+  .csv-table th {
+    background-color: #e2e8f0;
+    font-weight: bold;
+    font-size: 1.25rem;
+  }

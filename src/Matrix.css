@@ -1,0 +1,49 @@
+.confusion-matrix {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+  }
+  
+  .top-title {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .matrix-content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  .left-title {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-weight: bold;
+    margin-right: 1rem;
+  }
+  
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 3rem);
+    grid-auto-rows: 3rem;
+  }
+  
+  .matrix-header-cell {
+    background-color: #cbd5e0;
+    border: 1px solid #4a5568;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  
+  .matrix-cell {
+    background-color: #edf2f7;
+    border: 1px solid #4a5568;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  
