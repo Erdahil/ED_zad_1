@@ -10,11 +10,15 @@ function App() {
   const [visibleData, setVisibleData] = useState([]);
   //const [csvData, setCsvData] = useState([]); 
   const [processedData, setProcessedData] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   const handleDataLoaded = ({ rawData, processedData}) => {
+    if (isDataLoaded) return;
     setVisibleData(rawData);
     setProcessedData(processedData);
+    setIsDataLoaded(true);
   };
+
 
   return (
     <div className="app-container">
@@ -46,12 +50,12 @@ function App() {
         {/* model 1 */}
         <div className="flex flex-col gap-4">
           <ChartPanel title="Wykres modelu 1" />
-          {activeModel === 1 ? <Matrix data={processedData} model={1}/> : <ButtonGrid />}
+          {activeModel === 1 && isDataLoaded ? <Matrix data={processedData} model={1}/> : <ButtonGrid />}
         </div>
         {/* model 2 */}
         <div className="flex flex-col gap-4">
           <ChartPanel title="Wykres modelu 2" />
-          {activeModel === 1 ? <Matrix data={processedData} model={2}/> : <ButtonGrid />}
+          {activeModel === 1 && isDataLoaded ? <Matrix data={processedData} model={2}/> : <ButtonGrid />}
         </div>
       </div>
     </div>
