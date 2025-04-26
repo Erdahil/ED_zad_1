@@ -2,9 +2,10 @@ import { useState } from "react";
 import Papa from "papaparse";
 import "./CsvUploader.css";
 
-export default function CsvUploader({ model }) 
+export default function CsvUploader({ onDataLoaded }) 
 {
-  const [data, setData] = useState([]);
+  //const [data, setData] = useState([]);
+  const [visibleData, setVisibleData] = useState([]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -17,27 +18,19 @@ export default function CsvUploader({ model })
         const rawData = results.data;
 
         const processedData = rawData.map(row => {
-          const entries = Object.entries(row);
-          const newRow = {};
-
-          entries.forEach(([key, value], index) => {
-            if ([0, 1, 3].includes(index)) {
-              if (value === "<=50K") {
-                newRow[key] = 0;
-              } else if (value === ">50K") {
-                newRow[key] = 1;
-              } else {
-                newRow[key] = value;
-              }
-            } else {
-              newRow[key] = value;
-            }
+          const entries = Object.entries(row).map(([key, value]) => {
+            if (value === "<=50K") return [key, 0];
+            if (value === ">50K") return [key, 1];
+            return [key, value];
           });
-
-          return newRow;
+          return Object.fromEntries(entries);
         });
 
-        setData(processedData);
+        setVisibleData(rawData);
+
+        if (onDataLoaded) {
+          onDataLoaded({ rawData, processedData });
+        }
       },
     });
   };
@@ -51,11 +44,11 @@ export default function CsvUploader({ model })
         className="file-input"
       />
 
-      {data.length > 0 && (
+      {visibleData.length > 0 && (
         <table className="csv-table">
           <thead>
             <tr>
-              {Object.keys(data[0]).map((key, idx) => (
+              {Object.keys(visibleData[0]).map((key, idx) => (
                 <th key={idx}>
                   {key}
                 </th>
@@ -63,7 +56,7 @@ export default function CsvUploader({ model })
             </tr>
           </thead>
           <tbody>
-            {data.map((row, rowIndex) => (
+            {visibleData.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {Object.values(row).map((val, colIndex) => (
                   <td key={colIndex}>

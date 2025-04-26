@@ -7,7 +7,14 @@ import Matrix from "./Matrix";
 function App() {
 
   const [activeModel, setActiveModel] = useState(1);
-  const [csvData, setCsvData] = useState([]); 
+  const [visibleData, setVisibleData] = useState([]);
+  //const [csvData, setCsvData] = useState([]); 
+  const [processedData, setProcessedData] = useState([]);
+
+  const handleDataLoaded = ({ rawData, processedData}) => {
+    setVisibleData(rawData);
+    setProcessedData(processedData);
+  };
 
   return (
     <div className="app-container">
@@ -33,18 +40,18 @@ function App() {
       <div className="main-flex">
         {/* lewa strona */}
         <div className="">
-          <CsvUploader model = {setCsvData}/>
+          <CsvUploader onDataLoaded = {handleDataLoaded}/>
         </div>
 
         {/* model 1 */}
         <div className="flex flex-col gap-4">
           <ChartPanel title="Wykres modelu 1" />
-          {activeModel === 1 ? <Matrix data={csvData} model={1}/> : <ButtonGrid />}
+          {activeModel === 1 ? <Matrix data={processedData} model={1}/> : <ButtonGrid />}
         </div>
         {/* model 2 */}
         <div className="flex flex-col gap-4">
           <ChartPanel title="Wykres modelu 2" />
-          {activeModel === 1 ? <Matrix data={csvData} model={2}/> : <ButtonGrid />}
+          {activeModel === 1 ? <Matrix data={processedData} model={2}/> : <ButtonGrid />}
         </div>
       </div>
     </div>

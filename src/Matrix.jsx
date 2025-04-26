@@ -1,22 +1,68 @@
 import "./Matrix.css";
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Matrix({ data, model }) {
-    const confusionMatrix = [
-      [0, 0],
-      [0, 0],
-    ];
+    const [confusionMatrix, setConfusionMatrix] = useState([
+        [0, 0],
+        [0, 0],
+    ]);
 
-    if (data.length > 0) {
-        data.forEach(row => {
-          const actual = parseInt(Object.values(row)[0]); // kolumna 0 - income
-          const predicted = parseInt(Object.values(row)[model]); // kolumna 1 dla model=1, kolumna 3 dla model=2
+    useEffect(() => {
+        if (data.length > 0) {
+          const newConfusionMatrix = [
+            [0, 0],
+            [0, 0],
+          ];
+          /*console.log(data);
     
-          if (!isNaN(actual) && !isNaN(predicted)) {
-            confusionMatrix[actual][predicted]++;
-          }
+          data.forEach(row => {
+            const actual = row[0];// === "<=50K" ? 0 : 1; // Faktyczne Y
+            const predicted = row[model === 1 ? 1 : 3];// === "<=50K" ? 0 : 1; // Przewidywane Y
+    
+            newConfusionMatrix[actual][predicted]++;
+          });
+    
+          setConfusionMatrix(newConfusionMatrix);
+        }*/
+
+          data.forEach(row => {
+            const rowArray = Object.values(row);
+            //console.log(row["income"], row[1], row[2], row[3], row[4]);
+            // Sprawdzamy, czy wiersz zawiera odpowiednie wartości w odpowiednich kolumnach
+            const actual = Number(rowArray[0]);   // Faktyczne Y, czyli 0 lub 1
+            const predicted = Number(rowArray[model === 1 ? 1 : 3]); // Przewidywane Y (0 lub 1)
+
+            
+            // Aktualizuj macierz tylko dla wybranego modelu
+            
+            if ((actual === 0 || actual === 1) && (predicted === 0 || predicted === 1)) {
+                newConfusionMatrix[actual][predicted]++;
+            } else {
+                console.log(`Pominięto wiersz - nieprawidłowe wartości: actual=${actual}, predicted=${predicted}`);
+            }
+            
+            // Upewniamy się, że actual i predicted są poprawnymi wartościami (0 lub 1)
+            /*if (actual === 0 || actual === 1) {
+                if (predicted === 0 || predicted === 1) {
+                    newConfusionMatrix[actual][predicted]++;
+                }
+            }*/
+           /*
+                if ((actual === 0 || actual === 1) && (predicted === 0 || predicted === 1)) {
+                    newConfusionMatrix[actual][predicted]++;
+                } else {
+                    console.log(`Błędne dane: actual=${actual}, predicted=${predicted}`); // Jeśli są błędne dane, logujemy
+                }*/
         });
-      }
+        
+
+        setConfusionMatrix(newConfusionMatrix);
+    }
+
+    }, [data, model]);
+
+
+    
   
     return (
         <div className="confusion-matrix">
