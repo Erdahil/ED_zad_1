@@ -72,15 +72,18 @@ export default function Regression ({data, model})
             const rmseC = Math.sqrt(mseC);
 
             setMetrics({
-                mae: mae.toFixed(4),
-                mape: mape.toFixed(4),
-                mse: mse.toFixed(4),
-                rmse: rmse.toFixed(4),
+                mae: mae,
+                mape: mape,
+                mse: mse,
+                rmse: rmse,
 
-                maeC: maeC.toFixed(4),
-                mapeC: mapeC.toFixed(4),
-                mseC: mseC.toFixed(4),
-                rmseC: rmseC.toFixed(4),
+            });
+
+            setMCompare({
+                maeC: maeC,
+                mapeC: mapeC,
+                mseC: mseC,
+                rmseC: rmseC,
             });
         }
     }, [data, model]);
@@ -92,36 +95,36 @@ export default function Regression ({data, model})
                 <div className="param">
                     <span className="label">MAE:</span>
                     <span className={`value ${ 
-                        metrics.mae >= mCompare.maeC ? 'highlight-better' : 'highlight-worse'}`}>
+                        metrics.mae <= mCompare.maeC ? 'highlight-better' : 'highlight-worse'}`}>
                         {
-                            metrics.mae
+                            metrics.mae.toFixed(4)
                         }
                     </span>
                 </div>
                 <div className="param">
                     <span className="label">MAPE:</span>
                     <span className={`value ${ 
-                        metrics.mape >= mCompare.mapeC ? 'highlight-better' : 'highlight-worse'}`}>
+                        metrics.mape <= mCompare.mapeC ? 'highlight-better' : 'highlight-worse'}`}>
                         {
-                            metrics.mape
+                            metrics.mape.toFixed(4)
                         }
                     </span>
                 </div>
                 <div className="param">
                     <span className="label">MSE:</span>
                     <span className={`value ${ 
-                        metrics.mse >= mCompare.mseC ? 'highlight-better' : 'highlight-worse'}`}>
+                        metrics.mse <= mCompare.mseC ? 'highlight-better' : 'highlight-worse'}`}>
                         {
-                            metrics.mse
+                            metrics.mse.toFixed(4)
                         }
                     </span>
                 </div>
                 <div className="param">
                     <span className="label">RMSE:</span>
                     <span className={`value ${ 
-                        metrics.rmse >= mCompare.rmseC ? 'highlight-better' : 'highlight-worse'}`}>
+                        metrics.rmse <= mCompare.rmseC ? 'highlight-better' : 'highlight-worse'}`}>
                         {
-                            metrics.rmse
+                            metrics.rmse.toFixed(4)
                         }
                     </span>
                 </div>
