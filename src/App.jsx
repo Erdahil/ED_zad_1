@@ -3,6 +3,7 @@ import './App.css'
 import CsvUploader from "./CsvUploader";
 import ChartPanel from "./ChartPanel";
 import Matrix from "./Matrix";
+import Regression from './Regression';
 
 function App() {
 
@@ -22,7 +23,7 @@ function App() {
 
   return (
     <div className="app-container">
-      <h1 className="app-title">CSV Viewer + Wykresy</h1>
+      <h1 className="app-title">Zadanie programistyczne 2</h1>
       
       {/* wybor modelu */}
       <div className="toggle-buttons">
@@ -49,22 +50,40 @@ function App() {
 
         {/* środek */}
         <div className="center-panel">
-          {activeModel === 1 && isDataLoaded && (
-            <>
-              <ChartPanel title="Model 1:" data={processedData} model={1} />
-              <Matrix data={processedData} model={1} />
-            </>
-          )}
+        {isDataLoaded && (
+          <>
+            {activeModel === 1 && (
+              <>
+                <ChartPanel title="Model 1:" data={processedData} model={1} />
+                <Matrix data={processedData} model={1} />
+              </>
+            )}
+            {activeModel === 2 && (
+              <>
+                <Regression data={processedData} model={1}/>
+              </>
+            )}
+          </>
+        )}
         </div>
 
         {/* prawa strona */}
         <div className="right-panel">
-          {activeModel === 1 && isDataLoaded && (
-            <>
-              <ChartPanel title="Model 2:" data={processedData} model={2} />
-              <Matrix data={processedData} model={2} />
-            </>
-          )}
+        {isDataLoaded && (
+          <>
+            {activeModel === 1 && (
+              <>
+                <ChartPanel title="Model 2:" data={processedData} model={2} />
+                <Matrix data={processedData} model={2} />
+              </>
+            )}
+            {activeModel === 2 && (
+              <>
+                <Regression data={processedData} model={2}/>
+              </>
+            )}
+          </>
+        )}
         </div>
       </div>
     </div>
