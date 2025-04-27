@@ -10,10 +10,10 @@ export default function Regression ({data, model})
         rmse: 0,
     });
     const [mCompare, setMCompare] = useState({
-        mae: 0,
-        mape: 0,
-        mse: 0,
-        rmse: 0,
+        maeC: 0,
+        mapeC: 0,
+        mseC: 0,
+        rmseC: 0,
     });
 
     useEffect(() => {
@@ -47,23 +47,40 @@ export default function Regression ({data, model})
             for (let i = 0; i < yTrue.length; i++) 
             {
                 const error = yTrue[i] - yPred[i];
+                const errorComp = yTrue[i] - yPredComp[i];
+                
                 maeSum += Math.abs(error);
-                mapeSum += Math.abs(error / (yTrue[i] || 1)); // Żeby nie dzielić przez 0 jak debil
+                mapeSum += Math.abs(error / (yTrue[i] || 1));
                 mseSum += error * error;
+
+                maeSumComp += Math.abs(errorComp);
+                mapeSumComp += Math.abs(errorComp / (yTrue[i] || 1));
+                mseSumComp += errorComp * errorComp;
             }
 
             const n = yTrue.length;
+            const nComp = n;
 
             const mae = maeSum / n;
             const mape = (mapeSum / n) * 100;
             const mse = mseSum / n;
             const rmse = Math.sqrt(mse);
 
+            const maeC = maeSumComp / nComp;
+            const mapeC = (mapeSumComp / nComp) * 100;
+            const mseC = mseSumComp / nComp;
+            const rmseC = Math.sqrt(mseC);
+
             setMetrics({
                 mae: mae.toFixed(4),
                 mape: mape.toFixed(4),
                 mse: mse.toFixed(4),
                 rmse: rmse.toFixed(4),
+
+                maeC: maeC.toFixed(4),
+                mapeC: mapeC.toFixed(4),
+                mseC: mseC.toFixed(4),
+                rmseC: rmseC.toFixed(4),
             });
         }
     }, [data, model]);
@@ -72,10 +89,43 @@ export default function Regression ({data, model})
         <div>
             <h2 className="text-lg font-semibold mb-2">Wskaźniki regresji modelu {model}</h2>
             <div className="params">
-                <div className="param">MAE: {metrics.mae}</div>
-                <div className="param">MAPE: {metrics.mape}%</div>
-                <div className="param">MSE: {metrics.mse}</div>
-                <div className="param">RMSE: {metrics.rmse}</div>
+                <div className="param">
+                    <span className="label">MAE:</span>
+                    <span className={`value ${ 
+                        metrics.mae >= mCompare.maeC ? 'highlight-better' : 'highlight-worse'}`}>
+                        {
+                            metrics.mae
+                        }
+                    </span>
+                </div>
+                <div className="param">
+                    <span className="label">MAPE:</span>
+                    <span className={`value ${ 
+                        metrics.mape >= mCompare.mapeC ? 'highlight-better' : 'highlight-worse'}`}>
+                        {
+                            metrics.mape
+                        }
+                    </span>
+                </div>
+                <div className="param">
+                    <span className="label">MSE:</span>
+                    <span className={`value ${ 
+                        metrics.mse >= mCompare.mseC ? 'highlight-better' : 'highlight-worse'}`}>
+                        {
+                            metrics.mse
+                        }
+                    </span>
+                </div>
+                <div className="param">
+                    <span className="label">RMSE:</span>
+                    <span className={`value ${ 
+                        metrics.rmse >= mCompare.rmseC ? 'highlight-better' : 'highlight-worse'}`}>
+                        {
+                            metrics.rmse
+                        }
+                    </span>
+                </div>
+
             </div>
         </div>
     );
