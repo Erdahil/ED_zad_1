@@ -46,6 +46,7 @@
   flex-direction: row;
   flex: 1 33% 33%;
   min-width: 500px;
+  gap: 1rem;
 }
 
 .app-container {
@@ -86,4 +87,22 @@
   color: white;
 }
 
+.center-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;  
+}
 
+.center-panel > *:first-child {
+  margin-bottom: 6rem;
+}
+
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;  
+}
+
+.right-panel > *:first-child {
+  margin-bottom: 6rem;
+}

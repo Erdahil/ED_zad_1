@@ -3,12 +3,14 @@ import {
   } from "recharts";
 
 import React, { useState, useEffect } from 'react';
+import "./Matrix.css";
   
 export default function ChartPanel({ title, data, model }) 
 {
   const [fpr, setFpr] = useState([]);
   const [tpr, setTpr] = useState([]);
   const [rocData, setRocData] = useState([]);
+  const [auc, setAuc] = useState(0);
 
   useEffect(() => {
     if (data.length > 0) {
@@ -23,6 +25,7 @@ export default function ChartPanel({ title, data, model })
       });
 
       const rocPoints = [];
+      let aucValue = 0;
 
       for (let threshold = 0; threshold <= 1.0001; threshold += 0.05) {
         let tp = 0, fp = 0, tn = 0, fn = 0;
@@ -40,11 +43,18 @@ export default function ChartPanel({ title, data, model })
         const fpr = fp / (fp + tn) || 0;
 
         rocPoints.push({ fpr, tpr });
+
+        if (rocPoints.length > 1) {
+          const prevPoint = rocPoints[rocPoints.length - 2];
+          const currPoint = rocPoints[rocPoints.length - 1];
+          aucValue += (currPoint.fpr - prevPoint.fpr) * (prevPoint.tpr + currPoint.tpr) / 2;
+        }
       }
 
       setRocData(rocPoints);
-      console.log("roc:");
-      console.log(rocPoints);
+      setAuc(aucValue); 
+      //console.log("roc:");
+      //console.log(rocPoints);
     }
   }, [data, model]);
 
@@ -61,6 +71,14 @@ export default function ChartPanel({ title, data, model })
           <Line type="monotone" dataKey="tpr" stroke="#8884d8" dot={false} />
         </LineChart>
       </ResponsiveContainer>
+      </div>
+      <div className="params">
+        <div className="param">
+          <span className="label">AUC:</span>
+          <span className="value">
+            {auc.toFixed(4)*-1}
+          </span>
+        </div>
       </div>
     </div>
   );
