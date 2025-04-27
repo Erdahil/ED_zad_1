@@ -14,10 +14,12 @@ function App() {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   const handleDataLoaded = ({ rawData, processedData}) => {
-    if (isDataLoaded) return;
+    //if (isDataLoaded) return;
     setVisibleData(rawData);
     setProcessedData(processedData);
     setIsDataLoaded(true);
+    console.log("here");
+    console.log(Object.keys(processedData[0]).length);
   };
 
 
@@ -52,13 +54,13 @@ function App() {
         <div className="center-panel">
         {isDataLoaded && (
           <>
-            {activeModel === 1 && (
+            {activeModel === 1 && processedData.length > 0 && Object.keys(processedData[0]).length === 5 && (
               <>
                 <ChartPanel title="Model 1:" data={processedData} model={1} />
                 <Matrix data={processedData} model={1} />
               </>
             )}
-            {activeModel === 2 && (
+            {activeModel === 2 && processedData.length > 0 && Object.keys(processedData[0]).length === 3 && (
               <>
                 <Regression data={processedData} model={1}/>
               </>
@@ -71,13 +73,13 @@ function App() {
         <div className="right-panel">
         {isDataLoaded && (
           <>
-            {activeModel === 1 && (
+            {activeModel === 1 && processedData.length > 0 && Object.keys(processedData[0]).length === 5 && (
               <>
                 <ChartPanel title="Model 2:" data={processedData} model={2} />
                 <Matrix data={processedData} model={2} />
               </>
             )}
-            {activeModel === 2 && (
+            {activeModel === 2 && processedData.length > 0 && Object.keys(processedData[0]).length === 3 && (
               <>
                 <Regression data={processedData} model={2}/>
               </>
@@ -86,23 +88,6 @@ function App() {
         )}
         </div>
       </div>
-    </div>
-  );
-}
-
-// Komponent ButtonGrid: 3x3 przyciski
-function ButtonGrid() {
-  return (
-    <div className="matrix">
-      {[...Array(3)].map((_, rowIndex) => (
-        <div key={rowIndex} className="matrix-row">
-          {[...Array(3)].map((_, colIndex) => (
-            <button key={colIndex} className="matrix-cell">
-              {/* Puste przyciski */}
-            </button>
-          ))}
-        </div>
-      ))}
     </div>
   );
 }
