@@ -6,6 +6,10 @@ export default function Matrix({ data, model }) {
         [0, 0],
         [0, 0],
     ]);
+    const [CMCompare, setConfusionMatrixCompare] = useState([
+        [0, 0],
+        [0, 0],
+    ]);
 
     useEffect(() => {
         if (data.length > 0) {
@@ -14,10 +18,16 @@ export default function Matrix({ data, model }) {
             [0, 0],
           ];
 
+          const newCMCompare = [
+            [0, 0],
+            [0, 0],
+          ];
+
           data.forEach(row => {
             const rowArray = Object.values(row);
             const actual = Number(rowArray[0]);
             const predicted = Number(rowArray[model === 1 ? 1 : 3]);
+            const predictedCompare = Number(rowArray[model === 1 ? 3 : 1]);
 
             
             
@@ -26,14 +36,20 @@ export default function Matrix({ data, model }) {
             } else {
                 console.log(`Pominięto wiersz - nieprawidłowe wartości: actual=${actual}, predicted=${predicted}`);
             }
+
+            if ((actual === 0 || actual === 1) && (predictedCompare === 0 || predictedCompare === 1)) {
+                newCMCompare[actual][predictedCompare]++;
+            } else {
+                console.log(`Pominięto wiersz - nieprawidłowe wartości: actual=${actual}, predicted=${predicted}`);
+            }
             
         });
 
         setConfusionMatrix(newConfusionMatrix);
+        setConfusionMatrixCompare(newCMCompare);
     }
 
     }, [data, model]);
-
 
     
   
@@ -64,56 +80,115 @@ export default function Matrix({ data, model }) {
         <div className="params">
             <div className="param">
                 <span className="label">Trafność:</span>
-                <span className="value">
-                    {Math.round(((confusionMatrix[0][0]+confusionMatrix[1][1]) /
-                    (confusionMatrix[0][0]+confusionMatrix[1][1]+confusionMatrix[1][0]+confusionMatrix[0][1])).toFixed(4) * 10000)/100}%
+                <span className={`value ${ 
+                    Math.round(((confusionMatrix[0][0]+confusionMatrix[1][1]) /
+                    (confusionMatrix[0][0]+confusionMatrix[1][1]+confusionMatrix[1][0]+confusionMatrix[0][1])).toFixed(4) * 10000)/100 >= 
+                    Math.round(((CMCompare[0][0]+CMCompare[1][1]) /
+                        (CMCompare[0][0]+CMCompare[1][1]+CMCompare[1][0]+CMCompare[0][1])).toFixed(4) * 10000)/100
+                    ? 'highlight-better' : 'highlight-worse'}`}>
+                    {
+                        Math.round(((confusionMatrix[0][0]+confusionMatrix[1][1]) /
+                        (confusionMatrix[0][0]+confusionMatrix[1][1]+confusionMatrix[1][0]+confusionMatrix[0][1])).toFixed(4) * 10000)/100
+                    }%
                 </span>
             </div>
             <div className="param">
                 <span className="label">Całkowity współczynnik błędu:</span>
-                <span className="value">
+                <span className={`value ${ 
+                    Math.round(((confusionMatrix[0][1]+confusionMatrix[1][0]) /
+                    (confusionMatrix[0][0]+confusionMatrix[1][1]+confusionMatrix[1][0]+confusionMatrix[0][1])).toFixed(4) * 10000)/100 <=
+                    Math.round(((CMCompare[0][1]+CMCompare[1][0]) /
+                    (CMCompare[0][0]+CMCompare[1][1]+CMCompare[1][0]+CMCompare[0][1])).toFixed(4) * 10000)/100
+                    ? 'highlight-better' : 'highlight-worse'}`}
+                >
                     {Math.round(((confusionMatrix[0][1]+confusionMatrix[1][0]) /
                     (confusionMatrix[0][0]+confusionMatrix[1][1]+confusionMatrix[1][0]+confusionMatrix[0][1])).toFixed(4) * 10000)/100}%
                 </span>
             </div>
             <div className="param">
                 <span className="label">Czułość:</span>
-                <span className="value">
+                <span className={`value ${ 
+                    Math.round((confusionMatrix[1][1] /
+                    (confusionMatrix[1][1]+confusionMatrix[1][0])).toFixed(4) * 10000)/100 >=
+                    Math.round((CMCompare[1][1] /
+                    (CMCompare[1][1]+CMCompare[1][0])).toFixed(4) * 10000)/100
+                    ? 'highlight-better' : 'highlight-worse'}`}
+                >
                     {Math.round((confusionMatrix[1][1] /
                     (confusionMatrix[1][1]+confusionMatrix[1][0])).toFixed(4) * 10000)/100}%
                 </span>
             </div>
             <div className="param">
                 <span className="label">Wskaźnik fałszywie negatywnych:</span>
-                <span className="value">
+                <span className={`value ${ 
+                    Math.round((confusionMatrix[1][0] /
+                    (confusionMatrix[1][1]+confusionMatrix[1][0])).toFixed(4) * 10000)/100 <=
+                    Math.round((CMCompare[1][0] /
+                    (CMCompare[1][1]+CMCompare[1][0])).toFixed(4) * 10000)/100
+                    ? 'highlight-better' : 'highlight-worse'}`
+                }>
                     {Math.round((confusionMatrix[1][0] /
                     (confusionMatrix[1][1]+confusionMatrix[1][0])).toFixed(4) * 10000)/100}%
                 </span>
             </div>
             <div className="param">
                 <span className="label">Swoistość:</span>
-                <span className="value">
+                <span className={`value ${
+                    Math.round((confusionMatrix[0][0] /
+                    (confusionMatrix[0][0]+confusionMatrix[0][1])).toFixed(4) * 10000)/100 >=
+                    Math.round((CMCompare[0][0] /
+                    (CMCompare[0][0]+CMCompare[0][1])).toFixed(4) * 10000)/100
+                    ? 'highlight-better' : 'highlight-worse'}`
+                    }>
                     {Math.round((confusionMatrix[0][0] /
                     (confusionMatrix[0][0]+confusionMatrix[0][1])).toFixed(4) * 10000)/100}%
                 </span>
             </div>
             <div className="param">
                 <span className="label">Wskaźnik fałszywie pozytywnych:</span>
-                <span className="value">
+                <span className={`value ${ 
+                    Math.round((confusionMatrix[0][1] /
+                    (confusionMatrix[0][0]+confusionMatrix[0][1])).toFixed(4) * 10000)/100 <=
+                    Math.round((CMCompare[0][1] /
+                    (CMCompare[0][0]+CMCompare[0][1])).toFixed(4) * 10000)/100
+                    ? 'highlight-better' : 'highlight-worse'}`
+                    }>
                     {Math.round((confusionMatrix[0][1] /
                     (confusionMatrix[0][0]+confusionMatrix[0][1])).toFixed(4) * 10000)/100}%
                 </span>
             </div>
             <div className="param">
                 <span className="label">Precyzja:</span>
-                <span className="value">
+                <span className={`value ${
+                    Math.round((confusionMatrix[1][1] /
+                    (confusionMatrix[1][1]+confusionMatrix[0][1])).toFixed(4) * 10000)/100 >=
+                    Math.round((CMCompare[1][1] /
+                    (CMCompare[1][1]+CMCompare[0][1])).toFixed(4) * 10000)/100
+                    ? 'highlight-better' : 'highlight-worse'}`
+                    }>
                     {Math.round((confusionMatrix[1][1] /
                     (confusionMatrix[1][1]+confusionMatrix[0][1])).toFixed(4) * 10000)/100}%
                 </span>
             </div>
             <div className="param">
                 <span className="label">Wskaźnik F1:</span>
-                <span className="value">
+                <span className={`value ${ 
+                    Math.round(((2*(confusionMatrix[1][1] /
+                        (confusionMatrix[1][1]+confusionMatrix[1][0])) * (confusionMatrix[1][1] /
+                        (confusionMatrix[1][1]+confusionMatrix[0][1]))) / 
+                        ((confusionMatrix[1][1] /
+                        (confusionMatrix[1][1]+confusionMatrix[1][0])) + 
+                        (confusionMatrix[1][1] /
+                        (confusionMatrix[1][1]+confusionMatrix[0][1])))).toFixed(4) * 10000)/100 >=
+                    Math.round(((2*(CMCompare[1][1] /
+                        (CMCompare[1][1]+CMCompare[1][0])) * (CMCompare[1][1] /
+                        (CMCompare[1][1]+CMCompare[0][1]))) / 
+                        ((CMCompare[1][1] /
+                        (CMCompare[1][1]+CMCompare[1][0])) + 
+                        (CMCompare[1][1] /
+                        (CMCompare[1][1]+CMCompare[0][1])))).toFixed(4) * 10000)/100
+                    ? 'highlight-better' : 'highlight-worse'}`
+                    }>
                     {Math.round(((2*(confusionMatrix[1][1] /
                     (confusionMatrix[1][1]+confusionMatrix[1][0])) * (confusionMatrix[1][1] /
                     (confusionMatrix[1][1]+confusionMatrix[0][1]))) / 

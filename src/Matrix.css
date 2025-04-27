@@ -78,4 +78,13 @@
 .param .label {
     flex-grow: 1; 
 }
+
+.highlight-better {
+    color: green;
+    font-weight: bold;
+}
   
+.highlight-worse {
+    color: red;
+    font-weight: bold;
+}
