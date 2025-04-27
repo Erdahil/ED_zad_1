@@ -28,7 +28,6 @@ export default function Matrix({ data, model }) {
             }
             
         });
-        
 
         setConfusionMatrix(newConfusionMatrix);
     }

@@ -44,7 +44,8 @@
 .main-flex {
   display: flex;
   flex-direction: row;
-  gap: 1rem
+  flex: 1 33% 33%;
+  min-width: 500px;
 }
 
 .app-container {

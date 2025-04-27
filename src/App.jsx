@@ -43,19 +43,28 @@ function App() {
       
       <div className="main-flex">
         {/* lewa strona */}
-        <div className="">
-          <CsvUploader onDataLoaded = {handleDataLoaded}/>
+        <div className="left-panel">
+          <CsvUploader onDataLoaded={handleDataLoaded} />
         </div>
 
-        {/* model 1 */}
-        <div className="flex flex-col gap-4">
-          <ChartPanel title="Wykres modelu 1" />
-          {activeModel === 1 && isDataLoaded ? <Matrix data={processedData} model={1}/> : <ButtonGrid />}
+        {/* środek */}
+        <div className="center-panel">
+          {activeModel === 1 && isDataLoaded && (
+            <>
+              <ChartPanel title="Model 1:" data={processedData} model={1} />
+              <Matrix data={processedData} model={1} />
+            </>
+          )}
         </div>
-        {/* model 2 */}
-        <div className="flex flex-col gap-4">
-          <ChartPanel title="Wykres modelu 2" />
-          {activeModel === 1 && isDataLoaded ? <Matrix data={processedData} model={2}/> : <ButtonGrid />}
+
+        {/* prawa strona */}
+        <div className="right-panel">
+          {activeModel === 1 && isDataLoaded && (
+            <>
+              <ChartPanel title="Model 2:" data={processedData} model={2} />
+              <Matrix data={processedData} model={2} />
+            </>
+          )}
         </div>
       </div>
     </div>
