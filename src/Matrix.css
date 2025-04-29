@@ -1,90 +1,94 @@
 .confusion-matrix {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 1rem;
-  }
-  
-  .top-title {
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-  
-  .matrix-content {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-  }
-  
-  .left-title {
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    font-weight: bold;
-    margin-right: 1rem;
-  }
-  
-  .matrix-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 3rem);
-    grid-auto-rows: 3rem;
-  }
-  
-  .matrix-header-cell {
-    background-color: #cbd5e0;
-    border: 1px solid #4a5568;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-  }
-  
-  .matrix-cell {
-    background-color: #edf2f7;
-    border: 1px solid #4a5568;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
 
-  .params {
-    display: flex;
-    flex-direction: column;
-    gap: 10px; 
-    padding: 20px;
-    background-color: #f4f4f9; 
-    border-radius: 8px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    max-width: 400px;
-    margin: 20px auto;
-  }
+.top-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: black;
+}
 
-  .param {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    padding: 10px;
-    background-color: #fff;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.matrix-content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.left-title {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-weight: bold;
+  margin-right: 1rem;
+  color: black;
+}
+
+.matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 3rem);
+  grid-auto-rows: 3rem;
+}
+
+.matrix-header-cell {
+  background-color: #cbd5e0;
+  border: 1px solid #4a5568;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.matrix-cell {
+  background-color: #edf2f7;
+  border: 1px solid #4a5568;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.params {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  background-color: #f4f4f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.param {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .param .label {
-    flex-grow: 1; 
+  flex-grow: 1;
 }
 
 .highlight-better {
-    color: green;
-    font-weight: bold;
+  color: green;
+  font-weight: bold;
 }
-  
+
 .highlight-worse {
-    color: red;
-    font-weight: bold;
+  color: red;
+  font-weight: bold;
 }
