@@ -53,8 +53,6 @@ export default function ChartPanel({ title, data, model })
 
       setRocData(rocPoints);
       setAuc(aucValue); 
-      //console.log("roc:");
-      //console.log(rocPoints);
     }
   }, [data, model]);
 

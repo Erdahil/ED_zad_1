@@ -9,17 +9,13 @@ function App() {
 
   const [activeModel, setActiveModel] = useState(1);
   const [visibleData, setVisibleData] = useState([]);
-  //const [csvData, setCsvData] = useState([]); 
   const [processedData, setProcessedData] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   const handleDataLoaded = ({ rawData, processedData}) => {
-    //if (isDataLoaded) return;
     setVisibleData(rawData);
     setProcessedData(processedData);
     setIsDataLoaded(true);
-    console.log("here");
-    console.log(Object.keys(processedData[0]).length);
   };
 
 
@@ -50,7 +46,7 @@ function App() {
           <CsvUploader onDataLoaded={handleDataLoaded} />
         </div>
 
-        {/* środek */}
+        {/* srodek */}
         <div className="center-panel">
         {isDataLoaded && (
           <>

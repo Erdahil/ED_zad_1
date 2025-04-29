@@ -4,7 +4,6 @@ import "./CsvUploader.css";
 
 export default function CsvUploader({ onDataLoaded }) 
 {
-  //const [data, setData] = useState([]);
   const [visibleData, setVisibleData] = useState([]);
 
   const handleFileChange = (e) => {
